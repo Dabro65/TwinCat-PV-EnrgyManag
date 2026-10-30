@@ -1,13 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1">
-  <POU Name="MAIN" Id="{dcf70471-313e-4d4f-97bc-df7c8323bc4b}">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.16">
+  <POU Name="MAIN" Id="{dcf70471-313e-4d4f-97bc-df7c8323bc4b}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-END_VAR
-]]>
-    </Declaration>
+    fbMessage1 : FB_MY_EVENT_MESSAGE;
+    fbMessage2 : FB_MY_EVENT_MESSAGE;
+
+    nError1 : UDINT := 0;
+    nError2 : UDINT := 0;
+
+    sError1 : T_MaxString := 'Testfehler Wechselrichter';
+    sError2 : T_MaxString := 'Testfehler Speicher';
+
+    nNow : Tc2_EtherCAT.T_DCTIME64;
+END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[// Aktuelle DC-Zeit.
+// Der Meldungsbaustein speichert sie beim Erkennen eines Fehlers.
+nNow := Tc2_EtherCAT.F_GetCurDcTickTime64();
+
+fbMessage1(
+    sSourcename := 'Wechselrichter',
+    eLevel     := Tc3_EventLogger.TcEventSeverity.Error,
+    nEventCode := TC_EVENTS.EC_Uebungen.ExternalError.nEventId,
+    nError     := nError1,
+    sError     := sError1,
+    nTimeStamp := nNow
+);
+
+fbMessage2(
+    sSourcename := 'Speicher',
+    eLevel     := Tc3_EventLogger.TcEventSeverity.Warning,
+    nEventCode := TC_EVENTS.EC_Uebungen.ExternalError.nEventId,
+    nError     := nError2,
+    sError     := sError2,
+    nTimeStamp := nNow
+);]]></ST>
     </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="18" Count="19" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

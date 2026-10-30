@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.16">
+  <POU Name="FB_MY_EVENT_MESSAGE" Id="{97ecf362-b33a-4db5-bcb7-cd677adc3788}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_MY_EVENT_MESSAGE
+VAR_INPUT
+    sSourcename : T_MaxString;
+    eLevel     : Tc3_EventLogger.TcEventSeverity;
+    nEventCode : UDINT;
+    nError     : UDINT;
+    sError     : T_MaxString;
+    nTimeStamp : Tc2_EtherCAT.T_DCTIME64;
+END_VAR
+
+VAR
+    fbTcSourceInfo : Tc3_EventLogger.FB_TcSourceInfo;
+    fbTcMessage    : Tc3_EventLogger.FB_TcMessage;
+
+    nStep          : UINT := 0;
+    nLastError     : UDINT := 0;
+
+    // Eingänge für die mehrzyklische Verarbeitung zwischenspeichern
+    sSourceSaved   : T_MaxString;
+    eLevelSaved    : Tc3_EventLogger.TcEventSeverity;
+    nEventSaved    : UDINT;
+    nErrorSaved    : UDINT;
+    sErrorSaved    : T_MaxString;
+    nTimeSaved     : Tc2_EtherCAT.T_DCTIME64;
+
+    // Rückgabecode der EventLogger-Aufrufe
+    hrResult       : HRESULT;
+	
+	nEventTime : ULINT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE nStep OF
+
+    0: // Änderung des Fehlercodes erkennen
+        IF nError <> nLastError THEN
+            // Auch den Wechsel auf 0 merken:
+            // Derselbe Fehler kann danach erneut auftreten.
+            nLastError := nError;
+
+            IF nError > 0 THEN
+                sSourceSaved := sSourcename;
+                eLevelSaved  := eLevel;
+                nEventSaved  := nEventCode;
+                nErrorSaved  := nError;
+                sErrorSaved  := sError;
+                nTimeSaved   := nTimeStamp;
+
+                nStep := 10;
+            END_IF
+        END_IF
+
+
+    10: // Quelle setzen und Nachricht erstellen
+        fbTcSourceInfo.Clear();
+        fbTcSourceInfo.sName := sSourceSaved;
+
+        hrResult := fbTcMessage.Create(
+			eventClass   := TC_EVENTS.EC_Uebungen.ExternalError.uuidEventClass,
+			nEventId     := nEventSaved,
+			eSeverity    := eLevelSaved,
+			ipSourceInfo := fbTcSourceInfo
+		);
+        IF hrResult = 0 THEN // S_OK
+            nStep := 20;
+        END_IF
+
+
+    20: // Argumente setzen und Nachricht senden
+        fbTcMessage.ipArguments.Clear();
+        fbTcMessage.ipArguments.AddUDint(nErrorSaved);
+        fbTcMessage.ipArguments.AddString(sErrorSaved);
+
+        IF nTimeSaved = 0 THEN
+            // Sonderfall: EventLogger verwendet die aktuelle Zeit.
+            nEventTime := 0;
+        ELSE
+            nEventTime :=
+                Tc2_EtherCAT.DCTIME64_TO_FILETIME64(nTimeSaved);
+        END_IF
+
+        hrResult := fbTcMessage.Send(
+            nTimeStamp := nEventTime
+        );
+
+        IF hrResult = 0 THEN // S_OK
+            nStep := 30;
+        END_IF
+
+
+    30: // Meldungsinstanz freigeben
+        hrResult := fbTcMessage.Release();
+
+        IF hrResult = 0 THEN // S_OK
+            nStep := 0;
+        END_IF
+
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="FB_MY_EVENT_MESSAGE">
+      <LineId Id="39" Count="24" />
+      <LineId Id="105" Count="4" />
+      <LineId Id="70" Count="34" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

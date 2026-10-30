@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<TcEventSources Version="2">
+	<Source>
+		<GUID>{912FE514-DF66-4CCE-857F-A87D6B6843CD}</GUID>
+		<Name LcId="1033">Ereignisse der Uebungen</Name>
+		<Event>
+			<Id>#x1</Id>
+			<Message LcId="1033">Fehlercode {0}: {1}</Message>
+		</Event>
+	</Source>
+</TcEventSources>

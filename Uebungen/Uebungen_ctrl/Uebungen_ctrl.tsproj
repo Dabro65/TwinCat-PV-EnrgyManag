@@ -1,5 +1,19 @@
 <?xml version="1.0"?>
 <TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.78">
+	<DataTypes>
+		<DataType>
+			<Name GUID="{912FE514-DF66-4CCE-857F-A87D6B6843CD}" PersistentType="true">EC_Uebungen</Name>
+			<DisplayName TxtId=""><![CDATA[Ereignisse der Uebungen]]></DisplayName>
+			<EventId>
+				<Name Id="#x1">ExternalError</Name>
+				<DisplayName TxtId=""><![CDATA[Fehlercode {0}: {1}]]></DisplayName>
+				<Severity>Warning</Severity>
+			</EventId>
+			<Hides>
+				<Hide GUID="{5A261A97-D568-4166-8B5C-DA8CC794C702}"/>
+			</Hides>
+		</DataType>
+	</DataTypes>
 	<Project ProjectGUID="{C6681A0A-621A-4E54-84D3-3887D2851049}" Target64Bit="true" ShowHideConfigurations="#x6">
 		<System>
 			<Tasks>
@@ -10,15 +24,23 @@
 		</System>
 		<Plc>
 			<Project GUID="{A5259EF2-EE5B-4386-B1CC-39FC51CC2097}" Name="ueb_plc" PrjFilePath="ueb_plc\ueb_plc.plcproj" TmcFilePath="ueb_plc\ueb_plc.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="ueb_plc\ueb_plc.tmc" TmcHash="{8E0EDDDA-B4BD-F593-5537-021B7843F634}">
 					<Name>ueb_plc Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
 						<Context>
-							<Id>1</Id>
-							<Name>Default</Name>
+							<Id>0</Id>
+							<Name>PlcTask</Name>
+							<ManualConfig>
+								<OTCID>#x02010030</OTCID>
+							</ManualConfig>
+							<Priority>20</Priority>
+							<CycleTime>10000000</CycleTime>
 						</Context>
 					</Contexts>
+					<TaskPouOids>
+						<TaskPouOid Prio="20" OTCID="#x08502001"/>
+					</TaskPouOids>
 				</Instance>
 			</Project>
 		</Plc>
