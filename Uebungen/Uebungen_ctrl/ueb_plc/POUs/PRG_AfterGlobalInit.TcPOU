@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.16">
+  <POU Name="PRG_AfterGlobalInit" Id="{5c41d1dd-01d0-469d-8066-6014c7bbebb2}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'}
+{attribute 'call_after_global_init_slot' := '1'}
+PROGRAM PRG_AfterGlobalInit
+VAR
+    nTimestampDeclaration : Tc2_EtherCAT.T_DCTIME64 :=
+        Tc2_EtherCAT.F_GetActualDcTime64();
+
+    nTimestampExecution : Tc2_EtherCAT.T_DCTIME64;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[nTimestampExecution := Tc2_EtherCAT.F_GetActualDcTime64();]]></ST>
+    </Implementation>
+    <LineIds Name="PRG_AfterGlobalInit">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

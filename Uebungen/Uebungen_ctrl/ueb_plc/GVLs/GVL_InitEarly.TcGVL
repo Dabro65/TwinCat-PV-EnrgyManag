@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.16">
+  <GVL Name="GVL_InitEarly" Id="{46159b77-d3de-40ec-934c-27f0e9d65cdb}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'global_init_slot' := '40001'}
+VAR_GLOBAL
+    nTimestamp : Tc2_EtherCAT.T_DCTIME64 :=
+        Tc2_EtherCAT.F_GetActualDcTime64();
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

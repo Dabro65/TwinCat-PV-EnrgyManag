@@ -24,7 +24,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{A5259EF2-EE5B-4386-B1CC-39FC51CC2097}" Name="ueb_plc" PrjFilePath="ueb_plc\ueb_plc.plcproj" TmcFilePath="ueb_plc\ueb_plc.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="ueb_plc\ueb_plc.tmc" TmcHash="{8E0EDDDA-B4BD-F593-5537-021B7843F634}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="ueb_plc\ueb_plc.tmc" TmcHash="{F162B730-3337-A60D-0646-F9FC70DE8051}">
 					<Name>ueb_plc Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>

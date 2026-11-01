@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.16">
+  <POU Name="FB_MyTimingSample" Id="{9cbe05af-01a4-4d3c-b0e3-9046fa23a359}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'call_after_init'}
+FUNCTION_BLOCK FB_MyTimingSample
+VAR
+    nTimestampFB_init   : Tc2_EtherCAT.T_DCTIME64;
+    nTimestampFB_reinit : Tc2_EtherCAT.T_DCTIME64;
+    nTimestampMyInit    : Tc2_EtherCAT.T_DCTIME64;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{2a55bf74-edf4-42d1-b74c-77ebbb937d90}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+    bInitRetains : BOOL;
+    bInCopyCode  : BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nTimestampFB_init := Tc2_EtherCAT.F_GetActualDcTime64();
+FB_init := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_reinit" Id="{57537796-dc9e-4b87-bf7b-aa51f9c09a10}">
+      <Declaration><![CDATA[METHOD FB_reinit : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nTimestampFB_reinit := Tc2_EtherCAT.F_GetActualDcTime64();
+FB_reinit := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="MyInit" Id="{20688810-ad08-442d-b284-aeca832cb7ed}">
+      <Declaration><![CDATA[{attribute 'call_after_init'}
+METHOD MyInit : BOOL]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nTimestampMyInit := Tc2_EtherCAT.F_GetActualDcTime64();
+MyInit := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_MyTimingSample">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MyTimingSample.FB_init">
+      <LineId Id="12" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MyTimingSample.FB_reinit">
+      <LineId Id="6" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MyTimingSample.MyInit">
+      <LineId Id="7" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
