@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.16">
+  <POU Name="FB_Register" Id="{1592dd4e-b7ea-4f87-a486-63caf88324df}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Register
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	arrRegister     : ARRAY[1..100] OF ITF_Base;
+    nNoOfInterfaces : UDINT := 0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="AddInterfacePointer" Id="{a647cf0f-ce03-4af8-a2f2-1948af184ec9}">
+      <Declaration><![CDATA[METHOD PUBLIC AddInterfacePointer : UDINT
+VAR_INPUT
+	ipBase : ITF_Base;
+END_VAR
+VAR
+	n : UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// 0 bedeutet: Registrierung nicht erfolgreich.
+AddInterfacePointer := 0;
+
+// Eine leere Interface-Referenz nicht aufnehmen.
+IF ipBase = 0 THEN
+    RETURN;
+END_IF
+
+// Bereits registriert? Bestehenden Platz zurückgeben.
+FOR n := 1 TO nNoOfInterfaces DO
+    IF arrRegister[n] = ipBase THEN
+        AddInterfacePointer := n;
+        RETURN;
+    END_IF
+END_FOR
+
+// Bei vollem Register nichts verändern.
+IF nNoOfInterfaces >= 100 THEN
+    RETURN;
+END_IF
+
+// Neue Referenz speichern.
+nNoOfInterfaces := nNoOfInterfaces + 1;
+arrRegister[nNoOfInterfaces] := ipBase;
+
+// Zugewiesenen Tabellenplatz zurückgeben.
+AddInterfacePointer := nNoOfInterfaces;]]></ST>
+      </Implementation>
+    </Method>
+    <ObjectProperties>
+      <XmlArchive>
+        <Data>
+          <o xml:space="preserve" t="UMLStereoTypeContainerObject">
+            <v n="IsType" t="UMLType">BaseArea</v>
+            <v n="Stereotype">""</v>
+            <d n="Stereotypes" t="Hashtable" />
+          </o>
+        </Data>
+        <TypeList>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="String">System.String</Type>
+          <Type n="UMLStereoTypeContainerObject">{30250973-b110-4e31-b562-c102e042dca4}</Type>
+          <Type n="UMLType">{0197b136-405a-42ee-bb27-fd08b621d0cf}</Type>
+        </TypeList>
+      </XmlArchive>
+    </ObjectProperties>
+    <LineIds Name="FB_Register">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Register.AddInterfacePointer">
+      <LineId Id="16" Count="25" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

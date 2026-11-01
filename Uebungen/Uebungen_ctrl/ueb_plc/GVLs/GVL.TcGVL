@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.16">
+  <GVL Name="GVL" Id="{910f564d-6735-44da-bef8-88d0eec27ca3}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'global_init_slot' := '40001'}
+VAR_GLOBAL
+    Register : FB_REGISTER;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

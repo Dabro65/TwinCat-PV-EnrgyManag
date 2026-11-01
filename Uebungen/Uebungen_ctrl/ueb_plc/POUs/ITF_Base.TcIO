@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.16">
+  <Itf Name="ITF_Base" Id="{9d342a4a-d176-4abd-ae0e-b725042d3cc8}">
+    <Declaration><![CDATA[INTERFACE ITF_Base
+]]></Declaration>
+    <Property Name="Error" Id="{54acd3de-fb7a-427c-a5fb-2211b0a2b32c}">
+      <Declaration><![CDATA[PROPERTY Error : UDINT]]></Declaration>
+      <Get Name="Get" Id="{bb431092-a5af-415c-b2c4-e9dc94f83181}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{734a7373-d5e4-43d7-9bdb-ab06affef9a4}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <ObjectProperties>
+      <XmlArchive>
+        <Data>
+          <o xml:space="preserve" t="UMLStereoTypeContainerObject">
+            <v n="IsType" t="UMLType">BaseArea</v>
+            <v n="Stereotype">""</v>
+            <d n="Stereotypes" t="Hashtable" />
+          </o>
+        </Data>
+        <TypeList>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="String">System.String</Type>
+          <Type n="UMLStereoTypeContainerObject">{30250973-b110-4e31-b562-c102e042dca4}</Type>
+          <Type n="UMLType">{0197b136-405a-42ee-bb27-fd08b621d0cf}</Type>
+        </TypeList>
+      </XmlArchive>
+    </ObjectProperties>
+  </Itf>
+</TcPlcObject>

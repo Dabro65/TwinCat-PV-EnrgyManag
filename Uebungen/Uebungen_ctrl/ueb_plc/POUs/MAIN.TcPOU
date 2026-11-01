@@ -16,6 +16,12 @@ VAR
 	
 	fbTiming1 : FB_MyTimingSample;
 	fbTiming2 : FB_MyTimingSample;
+	
+	fbBase1 : FB_Base;
+    fbBase2 : FB_Base;
+    fbBase3 : FB_Base;
+	
+	nErrorFromRegister : UDINT;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Aktuelle DC-Zeit.
@@ -38,11 +44,17 @@ fbMessage2(
     nError     := nError2,
     sError     := sError2,
     nTimeStamp := nNow
-);]]></ST>
+);
+
+IF GVL.Register.arrRegister[1] <> 0 THEN
+    nErrorFromRegister := GVL.Register.arrRegister[1].Error;
+END_IF]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="18" Count="19" />
       <LineId Id="2" Count="0" />
+      <LineId Id="60" Count="2" />
+      <LineId Id="59" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
