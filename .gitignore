@@ -259,3 +259,7 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+# Lokale Agent-Anweisungen und Dokumentation
+/AGENTS.md
+/agents.md
+/Dok/
